@@ -6,6 +6,7 @@ import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,13 @@ public class PizzaController {
     @GetMapping
     public ResponseEntity<List<PizzaEntity>> getAll() {
         return ResponseEntity.ok(this.pizzaService.getAll());
+    }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<PizzaEntity>> getAllPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "8") int elementsQty) {
+        return ResponseEntity.ok(this.pizzaService.getAllPaginated(page, elementsQty));
     }
 
     @GetMapping("/{id}")

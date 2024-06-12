@@ -1,5 +1,6 @@
 package com.platzi_pizzeria.platzi_pizzeria.web.controller;
 
+import com.platzi_pizzeria.platzi_pizzeria.persistence.entity.OrderEntity;
 import com.platzi_pizzeria.platzi_pizzeria.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,15 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<List<?>> getAll() {
         return ResponseEntity.ok(this.orderService.getAll());
+    }
+
+    @GetMapping("/todayOrders")
+    public ResponseEntity<?> getTodayOrders() {
+        return ResponseEntity.ok(this.orderService.getTodayOrders());
+    }
+
+    @GetMapping("/outsideOrders")
+    public ResponseEntity<List<OrderEntity>> getOutsideOrders() {
+        return ResponseEntity.ok(this.orderService.getOutsideOrders());
     }
 }

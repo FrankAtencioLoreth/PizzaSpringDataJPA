@@ -38,6 +38,20 @@ public class PizzaController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La pizza NO existe");
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<List<PizzaEntity>> getAvailable() {
+        return ResponseEntity.ok(this.pizzaService.getAvailable());
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<?> getByName(@PathVariable("name") String name) {
+        PizzaEntity pizzaEntity = this.pizzaService.getByName(name);
+        if(pizzaEntity!=null) {
+            return ResponseEntity.ok(pizzaEntity);
+        }
+        return ResponseEntity.status(404).body("La pizza NO existe");
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody PizzaEntity pizzaEntity) {
         try {

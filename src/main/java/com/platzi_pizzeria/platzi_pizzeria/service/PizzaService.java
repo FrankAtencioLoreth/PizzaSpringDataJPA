@@ -27,7 +27,12 @@ public class PizzaService {
     }
 
     public PizzaEntity getByName(String name) {
-        return this.pizzaRepository.findAllByAvailableTrueAndNameIgnoreCase(name);
+        return this.pizzaRepository.findFirstByAvailableTrueAndNameIgnoreCase(name)
+                .orElse(null);
+    }
+
+    public List<PizzaEntity> getCheapest(double price) {
+        return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(price);
     }
 
     public List<PizzaEntity> getWith(String description) {

@@ -52,6 +52,11 @@ public class PizzaController {
         return ResponseEntity.status(404).body("La pizza NO existe");
     }
 
+    @GetMapping("/cheapest/{price}")
+    public ResponseEntity<?> getCheapestPizza(@PathVariable("price") double price) {
+        return ResponseEntity.ok(this.pizzaService.getCheapest(price));
+    }
+
     @GetMapping("/with/{ingredient}")
     public ResponseEntity<?> getWith(@PathVariable("ingredient") String ingredient) {
         List<PizzaEntity>  listPizza = this.pizzaService.getWith(ingredient);

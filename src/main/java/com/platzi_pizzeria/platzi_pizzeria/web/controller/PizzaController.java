@@ -52,6 +52,24 @@ public class PizzaController {
         return ResponseEntity.status(404).body("La pizza NO existe");
     }
 
+    @GetMapping("/with/{ingredient}")
+    public ResponseEntity<?> getWith(@PathVariable("ingredient") String ingredient) {
+        List<PizzaEntity>  listPizza = this.pizzaService.getWith(ingredient);
+        if(!listPizza.isEmpty()) {
+            return ResponseEntity.ok(listPizza);
+        }
+        return ResponseEntity.status(404).body("La pizza NO existe");
+    }
+
+    @GetMapping("/without/{ingredient}")
+    public ResponseEntity<?> getWithout(@PathVariable("ingredient") String ingredient) {
+        List<PizzaEntity>  listPizza = this.pizzaService.getWithout(ingredient);
+        if(!listPizza.isEmpty()) {
+            return ResponseEntity.ok(listPizza);
+        }
+        return ResponseEntity.status(404).body("La pizza NO existe");
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody PizzaEntity pizzaEntity) {
         try {

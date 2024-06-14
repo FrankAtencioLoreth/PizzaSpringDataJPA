@@ -3,12 +3,15 @@ package com.platzi_pizzeria.platzi_pizzeria.service;
 import com.platzi_pizzeria.platzi_pizzeria.persistence.entity.PizzaEntity;
 import com.platzi_pizzeria.platzi_pizzeria.persistence.repository.PizzaPageSortRepository;
 import com.platzi_pizzeria.platzi_pizzeria.persistence.repository.PizzaRepository;
+import com.platzi_pizzeria.platzi_pizzeria.service.dto.UpdatePizzaPriceDto;
+import com.platzi_pizzeria.platzi_pizzeria.service.exception.EmailAPiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -71,5 +74,18 @@ public class PizzaService {
 
     public void delete(int idPizza) {
         this.pizzaRepository.deleteById(idPizza);
+    }
+
+    @Transactional(
+            noRollbackFor = EmailAPiException.class
+    )
+    public void updatePrice(UpdatePizzaPriceDto updatePizzaPriceDto) {
+        System.out.println("UPDATE INFO: " + updatePizzaPriceDto);
+        this.pizzaRepository.updatePrice(updatePizzaPriceDto);
+        this.sendEmail();
+    }
+
+    private void sendEmail() {
+        throw new EmailAPiException();
     }
 }

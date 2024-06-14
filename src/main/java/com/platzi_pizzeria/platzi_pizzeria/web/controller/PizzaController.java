@@ -2,6 +2,7 @@ package com.platzi_pizzeria.platzi_pizzeria.web.controller;
 
 import com.platzi_pizzeria.platzi_pizzeria.persistence.entity.PizzaEntity;
 import com.platzi_pizzeria.platzi_pizzeria.service.PizzaService;
+import com.platzi_pizzeria.platzi_pizzeria.service.dto.UpdatePizzaPriceDto;
 import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +107,20 @@ public class PizzaController {
                 return ResponseEntity.ok(this.pizzaService.save(pizzaEntity));
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La pizza NO existe");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/price")
+    public ResponseEntity<Void> updatePrice(@RequestBody UpdatePizzaPriceDto pizzaPriceDto) {
+        try {
+            if (this.pizzaService.existById(pizzaPriceDto.getIdPizza())) {
+                this.pizzaService.updatePrice(pizzaPriceDto);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.badRequest().build();

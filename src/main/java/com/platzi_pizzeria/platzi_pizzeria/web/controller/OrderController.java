@@ -3,6 +3,7 @@ package com.platzi_pizzeria.platzi_pizzeria.web.controller;
 import com.platzi_pizzeria.platzi_pizzeria.persistence.entity.OrderEntity;
 import com.platzi_pizzeria.platzi_pizzeria.persistence.projection.OrderSummary;
 import com.platzi_pizzeria.platzi_pizzeria.service.OrderService;
+import com.platzi_pizzeria.platzi_pizzeria.service.dto.RandomOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,10 @@ public class OrderController {
     @GetMapping("/summary/{id}")
     public ResponseEntity<OrderSummary> getOrderSummary(@PathVariable("id") int idOrder) {
         return ResponseEntity.ok(this.orderService.getSummary(idOrder));
+    }
+
+    @PostMapping("/random")
+    public ResponseEntity<Boolean> randomOrder(@RequestBody RandomOrderDto randomOrderDto) {
+        return ResponseEntity.ok(this.orderService.saveRandomOrder(randomOrderDto));
     }
 }

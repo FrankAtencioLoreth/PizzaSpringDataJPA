@@ -1,14 +1,17 @@
 package com.platzi_pizzeria.platzi_pizzeria.persistence.entity;
 
+import com.platzi_pizzeria.platzi_pizzeria.persistence.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "customer")
+@EntityListeners(AuditingEntityListener.class)
 @Getter @Setter @NoArgsConstructor
-public class CustomerEntity {
+public class CustomerEntity extends AuditableEntity {
 
     @Id @Column(name = "id_customer", nullable = false, length = 15)
     private String idCustomer;

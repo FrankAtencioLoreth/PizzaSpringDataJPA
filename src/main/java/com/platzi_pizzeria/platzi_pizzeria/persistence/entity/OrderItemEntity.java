@@ -1,16 +1,19 @@
 package com.platzi_pizzeria.platzi_pizzeria.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.platzi_pizzeria.platzi_pizzeria.persistence.audit.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "order_item")
+@EntityListeners(AuditingEntityListener.class)
 @IdClass(OrderItemId.class)
 @Getter @Setter @NoArgsConstructor
-public class OrderItemEntity {
+public class OrderItemEntity extends AuditableEntity {
 
     @Id
     @Column(name = "id_order", nullable = false)
